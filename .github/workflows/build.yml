@@ -32,6 +32,7 @@ jobs:
         run: |
           npm install -g yarn
           yarn install
+          yarn playwright install 
 
 
       - name: Testing on OS (${{ matrix.os }}) with Node.js (version ${{ matrix.node-version }}) attempt ${{ matrix.attempt }}
