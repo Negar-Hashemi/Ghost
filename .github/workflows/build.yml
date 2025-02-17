@@ -32,8 +32,10 @@ jobs:
         run: |
           npm install -g yarn
           yarn install
-          yarn playwright install
-          yarn add @tryghost/admin-x-design-system @tryghost/shade -w 
+          if [[ "$RUNNER_OS" == "Windows" ]]; then
+            npx playwright install
+          else
+            yarn playwright install
 
 
       - name: Testing on OS (${{ matrix.os }}) with Node.js (version ${{ matrix.node-version }}) attempt ${{ matrix.attempt }}
