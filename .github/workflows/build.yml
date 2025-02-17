@@ -32,13 +32,18 @@ jobs:
         run: |
           npm install -g yarn
           yarn install
-          if [[ "$RUNNER_OS" == "Windows" ]]; then
-            npx playwright install
-          else
-            yarn playwright install
+        shell: bash
 
+      - name: Install Playwright on Linux/macOS
+        if: runner.os != 'Windows'
+        run: yarn playwright install
+        shell: bash
 
-      - name: Testing on OS (${{ matrix.os }}) with Node.js (version ${{ matrix.node-version }}) attempt ${{ matrix.attempt }}
-        run: |
-          echo "Run attempt: ${{ matrix.attempt }}"
-          npm test
+      - name: Install Playwright on Windows
+        if: runner.os == 'Windows'
+        run: npx playwright install
+        shell: powershell
+
+      - name: Run Tests
+        run: npm test
+        shell: bash
